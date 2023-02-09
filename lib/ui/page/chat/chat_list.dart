@@ -118,6 +118,7 @@ class _ChatListPageUiState extends State<ChatListPageUi> {
                                 ),
                               ),
                             ))
+                            
                         : Expanded(
                             flex: 1,
                             child: TextButton(

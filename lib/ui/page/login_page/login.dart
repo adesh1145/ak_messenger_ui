@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:ak_messenger/ui/page/chat/chat_list.dart';
+import 'package:ak_messenger/ui/page/forget_password_page/forget_email_page/forget_password_page.dart';
+import 'package:ak_messenger/ui/page/login_page/login_api_services.dart';
 import 'package:ak_messenger/ui/page/register_page/register.dart';
+import 'package:ak_messenger/ui/widget/app_icon_top_part.dart';
 import 'package:ak_messenger/ui/widget/colors.dart';
 import 'package:ak_messenger/ui/widget/elevatedbutton.dart';
 import 'package:ak_messenger/ui/widget/svgpicture.dart';
@@ -17,17 +20,26 @@ class LogInWithEmailPageUi extends StatefulWidget {
 }
 
 class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
-  final GlobalKey _emailFormKey = GlobalKey<FormState>();
 
+  final GlobalKey _emailFormKey = GlobalKey<FormState>();
   final GlobalKey _passwordKey = GlobalKey<FormState>();
 
   final userController = TextEditingController();
-
   final passwordController = TextEditingController();
 
-  String usename = "";
-
+  String email = "";
   String password = "";
+
+  bool responseStatus=true;
+
+  String errorData(){
+    try{
+      return responseData['error']['email'][0].toString();
+    }
+    catch (e){
+      return "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,34 +47,8 @@ class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
       body: Stack(
         // alignment: Alignment.center,
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Container(
-              color: blueColor7,
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPictureWidget(
-                    path: "assets/icon/chat.svg",
-                    height: 125,
-                    color: Colors.white,
-                  ),
-                  TextWidget(
-                    text: " AK Messenger",
-                    fontsize: 30,
-                    textcolor: Colors.white,
-                    fontweight: FontWeight.bold,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.33,
+            TopPartOfScreen(),     Positioned(
+            top: MediaQuery.of(context).size.height * 0.33-MediaQuery.of(context).viewInsets.bottom*0.5,
             left: 0,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.67,
@@ -87,27 +73,40 @@ class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
                       textcolor: Colors.black,
                       fontweight: FontWeight.bold,
                     ),
-                    Row(
+                    Column(
                       children: [
-                        Expanded(
-                            child: Divider(
-                          thickness: 1.3,
-                          color: Colors.blueGrey,
-                        )),
-                        TextWidget(
-                          text: "  Log in Email/Password  ",
-                          textcolor: Colors.grey,
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Divider(
+                              thickness: 1.3,
+                              color: Colors.blueGrey,
+                            )),
+                            TextWidget(
+                              text: "  Log in Email/Password  ",
+                              textcolor: Colors.grey,
+                            ),
+                            Expanded(
+                                child: Divider(
+                              thickness: 1.3,
+                              color: Colors.blueGrey,
+                            )),
+                          ],
                         ),
-                        Expanded(
-                            child: Divider(
-                          thickness: 1.3,
-                          color: Colors.blueGrey,
-                        )),
+                      Padding(padding: EdgeInsets.only(top: 5,),
+                      child: TextWidget(
+                            text: errorData(),
+                            textcolor: Colors.red,
+                            fontsize: 15,
+                          ),
+                      )
                       ],
                     ),
+
+                
                     TextFieldWidget(
-                      hint: "Enter Email/Number",
-                      label: Text("Email/Number"),
+                      hint: "Enter Email",
+                      label: Text("Email"),
                       prfixIcon: Icon(Icons.email_outlined),
                       borderRadius: 10,
                       borderColor: Colors.grey,
@@ -115,7 +114,9 @@ class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
                       controller: userController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please Enter Email/Number";
+                          return "Please Enter Email";
+                        }else if (!value.contains('@')) {
+                          return "Please Enter @ ";
                         }
                         return null;
                       },
@@ -142,17 +143,23 @@ class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
                       textcolor: Colors.white,
                       borderRadius: 15,
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.06,
-                      onpressed: () {
-                       
-                          usename = "";
-                          password = "";
-                          usename = userController.text;
-                          password = passwordController.text;
-                          if (password != "" && usename != "") {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => ChatListPageUi(),));
-                          }
-                     
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      onpressed: () async {
+                        email = "";
+                        password = "";
+                        email = userController.text;
+                        password = passwordController.text;
+                        if (password != "" && email != "") {
+                          setState(() {
+                            responseStatus=false;
+                          });
+                          
+                           await action(context,email,password);
+                          responseStatus=true;
+                            setState(() {
+                              
+                            });
+                        }
                       },
                     ),
                     Row(
@@ -162,7 +169,9 @@ class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
                           text: "Forget Password?",
                           fontsize: 17,
                           textcolor: blackColor,
-                          onpressed: () {},
+                          onpressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder:(context) => ForgetPageUi(),));
+                          },
                         ),
                         ElevatedButtonWidget(
                           text: "Register",
@@ -234,8 +243,19 @@ class _LogInWithEmailPageUiState extends State<LogInWithEmailPageUi> {
               ),
             ),
           ),
+          if (responseStatus==false)
+          const Opacity(
+            opacity: 0.8,
+            child: ModalBarrier(dismissible: true, color: Colors.black),
+          ),
+        if (responseStatus==false)
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
         ],
       ),
-    );
+   
+      
+       );
   }
 }

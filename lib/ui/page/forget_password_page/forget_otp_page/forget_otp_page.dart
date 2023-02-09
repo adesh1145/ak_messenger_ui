@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
-import 'package:ak_messenger/ui/page/login_page/login.dart';
-import 'package:ak_messenger/ui/page/register_page/register_api_services.dart';
+
+import 'package:ak_messenger/ui/page/forget_password_page/forget_otp_page/forget_otp_api_services.dart';
 import 'package:ak_messenger/ui/widget/app_icon_top_part.dart';
 import 'package:ak_messenger/ui/widget/colors.dart';
 import 'package:ak_messenger/ui/widget/elevatedbutton.dart';
@@ -10,35 +10,43 @@ import 'package:ak_messenger/ui/widget/text.dart';
 import 'package:ak_messenger/ui/widget/textformfield.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPageUi extends StatefulWidget {
-  const RegisterPageUi({super.key});
+class ForgetOtpPage extends StatefulWidget {
+   ForgetOtpPage({super.key,required this.email});
+  String email;
+
 
   @override
-  State<RegisterPageUi> createState() => _RegisterPageUiState();
+  // ignore: no_logic_in_create_state
+  State<ForgetOtpPage> createState() => _ForgetOtpPageState();
 }
 
-class _RegisterPageUiState extends State<RegisterPageUi> {
-  final GlobalKey _numberFormKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
+class _ForgetOtpPageState extends State<ForgetOtpPage> {
+  final GlobalKey _forgetPasswordFormKey = GlobalKey<FormState>();
+
+  final otpController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final confirmPasswordController = TextEditingController();
 
-  String name = "";
-  String email = "";
-  String password = "";
-  String confirmPassword = "";
-  bool responseStatus=true;
+  String otp = "";
 
+  String password = "";
+
+  String confirmPassword = "";
+
+  bool responseStatus=true;
   String errorData(){
     try{
-      return responseData['error']['email'][0].toString();
+  
+      var s= responseData['error']['msg'][0].toString();
+
+      return s;
     }
     catch (e){
       return "";
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +57,7 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
           TopPartOfScreen(),
          Positioned(
             top: MediaQuery.of(context).size.height * 0.33 -
-                MediaQuery.of(context).viewInsets.bottom * 0.75,
+                MediaQuery.of(context).viewInsets.bottom * 0.6,
             left: 0,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.67,
@@ -62,7 +70,7 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                   ),
                   gradient: gradientColor),
               child: Form(
-                key: _numberFormKey,
+                key: _forgetPasswordFormKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -83,7 +91,7 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                               color: Colors.blueGrey,
                             )),
                             TextWidget(
-                              text: "  Register  ",
+                              text: " OTP and Password ",
                               textcolor: Colors.grey,
                             ),
                             Expanded(
@@ -94,48 +102,34 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                           ],
                         ),
 
-                      Padding(padding: EdgeInsets.only(top: 5,),
-                      child: TextWidget(
-                            text: errorData(),
-                            textcolor: Colors.red,
-                            fontsize: 15,
-                          ),
+                      errorData()==""?Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                      TextWidget(
+                        text: "OTP has been Sent ${widget.email}",
+                        textcolor: Colors.green,
                       )
+                    ],):TextWidget(
+                            text: "Invalid OTP",
+                            textcolor: Colors.red,
+                          ),
                       ],
                     ),
                     TextFieldWidget(
-                      hint: "Enter Name",
-                      label: Text("Name"),
-                      prfixIcon: Icon(
-                        Icons.person_outlined,
-                      ),
+                     hint: "Enter Email OTP",
+                      label: Text("Email OTP"),
+                      prfixIcon: Icon( Icons.pin, ),
                       borderRadius: 10,
                       borderColor: Colors.grey,
-                      textInputType: TextInputType.name,
-                      controller: nameController,
+                      textInputType: TextInputType.number,
+                      controller: otpController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please Enter Name".toString();
-                        }
-
-                        return null;
-                      },
-                    ),
-                    TextFieldWidget(
-                      hint: "Enter Email",
-                      label: Text("Email"),
-                      prfixIcon: Icon(
-                        Icons.email_outlined,
-                      ),
-                      borderRadius: 10,
-                      borderColor: Colors.grey,
-                      textInputType: TextInputType.emailAddress,
-                      controller: emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Email".toString();
-                        } else if (!value.contains('@')) {
-                          return "Please Enter @ ";
+                          return "Please Enter OTP".toString();
+                        } else if (value.length < 4 || value.length > 4) {
+                          return "Please Enter 4 Digit OTP";
                         }
                         return null;
                       },
@@ -179,24 +173,21 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                       },
                     ),
                     ElevatedButtonWidget(
-                      text: "Register",
+                      text: "Submit",
                       borderRadius: 15,
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.06,
                       textcolor: Colors.white,
                       onpressed: () async{
-                        name = "";
-                        email = "";
+                        otp = "";
                         password = "";
                         confirmPassword = "";
 
-                        name = nameController.text;
-                        email = emailController.text;
+                        otp = otpController.text;
                         password = passwordController.text;
                         confirmPassword = confirmPasswordController.text;
 
-                        if (name != "" &&
-                            email.contains('@') &&
+                        if (otp != "" &&
                             password != "" &&
                             confirmPassword != "" &&
                             password == confirmPassword) {
@@ -205,7 +196,7 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                             responseStatus=false;
                           });
                           
-                          await fetchUser(context,email,name,password);
+                          await fetchUser(context,widget.email,otp,password);
                           responseStatus=true;
                             setState(() {
                               
@@ -213,24 +204,16 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                         } 
                       },
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ElevatedButtonWidget(
-                          text: "Log In",
-                          fontsize: 15,
-                          textcolor: blackColor,
-                          onpressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LogInWithEmailPageUi(),
-                                ));
-                          },
-                        )
-                      ],
+                  ElevatedButtonWidget(
+                      text: "Resend OTP",
+                      fontsize: 15,
+                      textcolor: blueColor7,
+                      onpressed: () {},
                     ),
-                  ],
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.12,
+                    ),
+                 ],
                 ),
               ),
             ),
