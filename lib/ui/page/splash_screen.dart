@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
-import 'package:ak_messenger/ui/page/login_page/login.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/svgpicture.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
+
+import 'package:akmessenger/ui/widget/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/image_constant.dart';
+import '../widget/colors.dart';
+import '../widget/svgpicture.dart';
+import 'login_page/login.dart';
 
 class SplashScreenUI extends StatefulWidget {
   const SplashScreenUI({super.key});
@@ -34,7 +37,7 @@ class _SplashScreenUIState extends State<SplashScreenUI> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPictureWidget(
-              path: "assets/icon/chat.svg",
+              path: ImageConstant.messageIcon,
               height: 175,
               color: blueColor7,
             ),

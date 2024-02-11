@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
-import 'package:ak_messenger/ui/page/login_page/login.dart';
-import 'package:ak_messenger/ui/page/register_page/register_api_services.dart';
-import 'package:ak_messenger/ui/widget/app_icon_top_part.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/elevatedbutton.dart';
-import 'package:ak_messenger/ui/widget/svgpicture.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
-import 'package:ak_messenger/ui/widget/textformfield.dart';
+import '../../page/login_page/login.dart';
+import '../../page/register_page/register_api_services.dart';
+import '../../widget/app_icon_top_part.dart';
+import '../../widget/colors.dart';
+import '../../widget/elevatedbutton.dart';
+import '../../widget/svgpicture.dart';
+import '../../widget/text.dart';
+import '../../widget/textformfield.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPageUi extends StatefulWidget {
@@ -28,17 +28,15 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
   String email = "";
   String password = "";
   String confirmPassword = "";
-  bool responseStatus=true;
+  bool responseStatus = true;
 
-  String errorData(){
-    try{
+  String errorData() {
+    try {
       return responseData['error']['email'][0].toString();
-    }
-    catch (e){
+    } catch (e) {
       return "";
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,7 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
         // alignment: Alignment.center,
         children: [
           TopPartOfScreen(),
-         Positioned(
+          Positioned(
             top: MediaQuery.of(context).size.height * 0.33 -
                 MediaQuery.of(context).viewInsets.bottom * 0.75,
             left: 0,
@@ -93,14 +91,16 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                             )),
                           ],
                         ),
-
-                      Padding(padding: EdgeInsets.only(top: 5,),
-                      child: TextWidget(
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 5,
+                          ),
+                          child: TextWidget(
                             text: errorData(),
                             textcolor: Colors.red,
                             fontsize: 15,
                           ),
-                      )
+                        )
                       ],
                     ),
                     TextFieldWidget(
@@ -184,7 +184,7 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.06,
                       textcolor: Colors.white,
-                      onpressed: () async{
+                      onpressed: () async {
                         name = "";
                         email = "";
                         password = "";
@@ -200,17 +200,14 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
                             password != "" &&
                             confirmPassword != "" &&
                             password == confirmPassword) {
-                            
-                            setState(() {
-                            responseStatus=false;
+                          setState(() {
+                            responseStatus = false;
                           });
-                          
-                          await fetchUser(context,email,name,password);
-                          responseStatus=true;
-                            setState(() {
-                              
-                            });
-                        } 
+
+                          await fetchUser(context, email, name, password);
+                          responseStatus = true;
+                          setState(() {});
+                        }
                       },
                     ),
                     Row(
@@ -235,15 +232,15 @@ class _RegisterPageUiState extends State<RegisterPageUi> {
               ),
             ),
           ),
-      if (responseStatus==false)
-          const Opacity(
-            opacity: 0.8,
-            child: ModalBarrier(dismissible: true, color: Colors.black),
-          ),
-        if (responseStatus==false)
-          const Center(
-            child: CircularProgressIndicator(),
-          ),
+          if (responseStatus == false)
+            const Opacity(
+              opacity: 0.8,
+              child: ModalBarrier(dismissible: true, color: Colors.black),
+            ),
+          if (responseStatus == false)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
         ],
       ),
     );

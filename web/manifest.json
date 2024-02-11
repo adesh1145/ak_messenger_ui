@@ -1,11 +1,11 @@
 {
-    "name": "ak_messenger",
-    "short_name": "ak_messenger",
+    "name": "akmessenger",
+    "short_name": "akmessenger",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "It Is a Messenger Apps Like Whatsapp",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

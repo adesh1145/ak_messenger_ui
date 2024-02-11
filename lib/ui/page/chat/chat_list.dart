@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:ak_messenger/ui/page/chat/chat_page.dart';
-import 'package:ak_messenger/ui/page/contact_list/Contact_list_page.dart';
-import 'package:ak_messenger/ui/page/profile/update_profile_page.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
+import '../../widget/colors.dart';
+import '../../widget/text.dart';
+import '../../widget/textformfield.dart';
+import '../contact_list/contact_list_page.dart';
+import '../profile/update_profile_page.dart';
+import 'chat_page.dart';
 
-import 'package:ak_messenger/ui/widget/text.dart';
-import 'package:ak_messenger/ui/widget/textformfield.dart';
 import 'package:flutter/material.dart';
 
 class ChatListPageUi extends StatefulWidget {
@@ -19,8 +19,7 @@ class ChatListPageUi extends StatefulWidget {
 class _ChatListPageUiState extends State<ChatListPageUi> {
   bool searchBarStatus = false;
   var searchTextController = TextEditingController();
- 
-  
+
   Widget chatList(context, index) {
     return InkWell(
       onTap: () {},
@@ -118,7 +117,6 @@ class _ChatListPageUiState extends State<ChatListPageUi> {
                                 ),
                               ),
                             ))
-                            
                         : Expanded(
                             flex: 1,
                             child: TextButton(
@@ -253,15 +251,15 @@ class _ChatListPageUiState extends State<ChatListPageUi> {
                         padding: EdgeInsets.all(2),
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                         if(searchTextController.text==""||searchTextController.text.isEmpty){
-                          return chatList(context, index);
-                         }
-                         else if(index.toString().toLowerCase().contains(searchTextController.text.toLowerCase())){
-                          return chatList(context, index);
-                         }
-                         else{
-                          return Container();
-                         }
+                          if (searchTextController.text == "" ||
+                              searchTextController.text.isEmpty) {
+                            return chatList(context, index);
+                          } else if (index.toString().toLowerCase().contains(
+                              searchTextController.text.toLowerCase())) {
+                            return chatList(context, index);
+                          } else {
+                            return Container();
+                          }
                         },
                         itemCount: 100,
                       ),

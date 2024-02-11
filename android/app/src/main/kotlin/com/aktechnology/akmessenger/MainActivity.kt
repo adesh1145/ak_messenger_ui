@@ -1,4 +1,4 @@
-package com.example.ak_messenger
+package com.aktechnology.akmessenger
 
 import io.flutter.embedding.android.FlutterActivity
 

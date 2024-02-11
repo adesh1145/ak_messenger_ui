@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
+import '../../widget/colors.dart';
+import '../../widget/text.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePageUi extends StatelessWidget {
@@ -39,16 +39,16 @@ class ProfilePageUi extends StatelessWidget {
                       ),
                     ),
                     Container(
-                        height: 180,
-                        width: 180,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/client.png'),
-                            fit: BoxFit.cover,
-                          ),
+                      height: 180,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/client.png'),
+                          fit: BoxFit.cover,
                         ),
+                      ),
                     ),
                     IconButton(
                       onPressed: () {},

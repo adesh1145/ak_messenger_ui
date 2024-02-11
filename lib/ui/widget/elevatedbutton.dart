@@ -1,8 +1,9 @@
 // ignore_for_file: sort_child_properties_last, prefer_const_constructors
 
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
 import 'package:flutter/material.dart';
+
+import 'colors.dart';
+import 'text.dart';
 
 class ElevatedButtonWidget extends StatelessWidget {
   const ElevatedButtonWidget({

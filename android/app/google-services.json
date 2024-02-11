@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435247959347",
+    "project_id": "ak-messenger-93e1f",
+    "storage_bucket": "ak-messenger-93e1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435247959347:android:8f35b11d9187ecb3ed4246",
+        "android_client_info": {
+          "package_name": "com.aktechnology.akmessenger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB6h9rL6RduHuiRlDcXWOJcm2Kwhio9b0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

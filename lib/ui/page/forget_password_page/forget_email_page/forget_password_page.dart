@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, no_logic_in_create_state
 
-import 'package:ak_messenger/ui/page/forget_password_page/forget_email_page/forget_password_api_service.dart';
-import 'package:ak_messenger/ui/widget/app_icon_top_part.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/elevatedbutton.dart';
-import 'package:ak_messenger/ui/widget/svgpicture.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
-import 'package:ak_messenger/ui/widget/textformfield.dart';
+import '../../../page/forget_password_page/forget_email_page/forget_password_api_service.dart';
+import '../../../widget/app_icon_top_part.dart';
+import '../../../widget/colors.dart';
+import '../../../widget/elevatedbutton.dart';
+import '../../../widget/text.dart';
+import '../../../widget/textformfield.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPageUi extends StatefulWidget {
@@ -26,14 +25,12 @@ class _ForgetPageUi extends State<ForgetPageUi> {
   bool responseStatus = true;
   String errorData() {
     try {
-    
-       var s=responseData['error']['msg'][0].toString();
-       return s;
+      var s = responseData['error']['msg'][0].toString();
+      return s;
     } catch (e) {
       return "";
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +39,7 @@ class _ForgetPageUi extends State<ForgetPageUi> {
         // alignment: Alignment.center,
         children: [
           TopPartOfScreen(),
-        Positioned(
+          Positioned(
             top: MediaQuery.of(context).size.height * 0.33,
             left: 0,
             child: Container(
@@ -87,16 +84,13 @@ class _ForgetPageUi extends State<ForgetPageUi> {
                             )),
                           ],
                         ),
-                      
-                        
                         Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextWidget(
-                                text: errorData(),
-                                textcolor: Colors.red,
-                              ),
-                            )
-                            
+                          padding: const EdgeInsets.only(top: 10),
+                          child: TextWidget(
+                            text: errorData(),
+                            textcolor: Colors.red,
+                          ),
+                        )
                       ],
                     ),
 
@@ -135,7 +129,7 @@ class _ForgetPageUi extends State<ForgetPageUi> {
                           await fetchUser(context, email);
                           responseStatus = true;
                           setState(() {});
-                         }
+                        }
                       },
                     ),
 

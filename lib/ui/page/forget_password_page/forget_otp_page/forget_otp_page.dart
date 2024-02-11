@@ -1,19 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
-
-import 'package:ak_messenger/ui/page/forget_password_page/forget_otp_page/forget_otp_api_services.dart';
-import 'package:ak_messenger/ui/widget/app_icon_top_part.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/elevatedbutton.dart';
-import 'package:ak_messenger/ui/widget/svgpicture.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
-import 'package:ak_messenger/ui/widget/textformfield.dart';
+import '../../../page/forget_password_page/forget_otp_page/forget_otp_api_services.dart';
+import '../../../widget/app_icon_top_part.dart';
+import '../../../widget/colors.dart';
+import '../../../widget/elevatedbutton.dart';
+import '../../../widget/text.dart';
+import '../../../widget/textformfield.dart';
 import 'package:flutter/material.dart';
 
 class ForgetOtpPage extends StatefulWidget {
-   ForgetOtpPage({super.key,required this.email});
+  ForgetOtpPage({super.key, required this.email});
   String email;
-
 
   @override
   // ignore: no_logic_in_create_state
@@ -35,15 +32,13 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
 
   String confirmPassword = "";
 
-  bool responseStatus=true;
-  String errorData(){
-    try{
-  
-      var s= responseData['error']['msg'][0].toString();
+  bool responseStatus = true;
+  String errorData() {
+    try {
+      var s = responseData['error']['msg'][0].toString();
 
       return s;
-    }
-    catch (e){
+    } catch (e) {
       return "";
     }
   }
@@ -55,7 +50,7 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
         // alignment: Alignment.center,
         children: [
           TopPartOfScreen(),
-         Positioned(
+          Positioned(
             top: MediaQuery.of(context).size.height * 0.33 -
                 MediaQuery.of(context).viewInsets.bottom * 0.6,
             left: 0,
@@ -101,26 +96,32 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                             )),
                           ],
                         ),
-
-                      errorData()==""?Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ),
-                      TextWidget(
-                        text: "OTP has been Sent ${widget.email}",
-                        textcolor: Colors.green,
-                      )
-                    ],):TextWidget(
-                            text: "Invalid OTP",
-                            textcolor: Colors.red,
-                          ),
+                        errorData() == ""
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                  ),
+                                  TextWidget(
+                                    text: "OTP has been Sent ${widget.email}",
+                                    textcolor: Colors.green,
+                                  )
+                                ],
+                              )
+                            : TextWidget(
+                                text: "Invalid OTP",
+                                textcolor: Colors.red,
+                              ),
                       ],
                     ),
                     TextFieldWidget(
-                     hint: "Enter Email OTP",
+                      hint: "Enter Email OTP",
                       label: Text("Email OTP"),
-                      prfixIcon: Icon( Icons.pin, ),
+                      prfixIcon: Icon(
+                        Icons.pin,
+                      ),
                       borderRadius: 10,
                       borderColor: Colors.grey,
                       textInputType: TextInputType.number,
@@ -178,7 +179,7 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.06,
                       textcolor: Colors.white,
-                      onpressed: () async{
+                      onpressed: () async {
                         otp = "";
                         password = "";
                         confirmPassword = "";
@@ -191,42 +192,39 @@ class _ForgetOtpPageState extends State<ForgetOtpPage> {
                             password != "" &&
                             confirmPassword != "" &&
                             password == confirmPassword) {
-                            
-                            setState(() {
-                            responseStatus=false;
+                          setState(() {
+                            responseStatus = false;
                           });
-                          
-                          await fetchUser(context,widget.email,otp,password);
-                          responseStatus=true;
-                            setState(() {
-                              
-                            });
-                        } 
+
+                          await fetchUser(context, widget.email, otp, password);
+                          responseStatus = true;
+                          setState(() {});
+                        }
                       },
                     ),
-                  ElevatedButtonWidget(
+                    ElevatedButtonWidget(
                       text: "Resend OTP",
                       fontsize: 15,
                       textcolor: blueColor7,
                       onpressed: () {},
                     ),
-                  SizedBox(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.12,
                     ),
-                 ],
+                  ],
                 ),
               ),
             ),
           ),
-      if (responseStatus==false)
-          const Opacity(
-            opacity: 0.8,
-            child: ModalBarrier(dismissible: true, color: Colors.black),
-          ),
-        if (responseStatus==false)
-          const Center(
-            child: CircularProgressIndicator(),
-          ),
+          if (responseStatus == false)
+            const Opacity(
+              opacity: 0.8,
+              child: ModalBarrier(dismissible: true, color: Colors.black),
+            ),
+          if (responseStatus == false)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
         ],
       ),
     );

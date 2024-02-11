@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:ak_messenger/ui/page/chat/chat_message_model.dart';
-import 'package:ak_messenger/ui/page/profile/profile_page.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/date_time.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
 import 'package:flutter/material.dart';
+import '../../widget/colors.dart';
+import '../../widget/date_time.dart';
+import '../../widget/text.dart';
+import '../profile/profile_page.dart';
 import 'chat_data.dart';
+import 'chat_message_model.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -74,7 +74,11 @@ class _ChatPageState extends State<ChatPage> {
                           padding: MaterialStateProperty.all<EdgeInsets>(
                               EdgeInsets.all(0))),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder:(context) => ProfilePageUi(),));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePageUi(),
+                            ));
                       },
                       child: Container(
                         height: 45,
@@ -87,7 +91,7 @@ class _ChatPageState extends State<ChatPage> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                    ),
+                      ),
                     ),
                   ],
                 ),
@@ -143,7 +147,6 @@ class _ChatPageState extends State<ChatPage> {
                                   maxWidth: 240,
                                 ),
                                 decoration: BoxDecoration(
-                                  
                                   borderRadius:
                                       messageList[index].messageType ==
                                               "receiver"
@@ -161,11 +164,11 @@ class _ChatPageState extends State<ChatPage> {
                                           "receiver"
                                       ? Colors.grey.shade200
                                       : Colors.blue[200]),
-                                boxShadow: [
-                                  BoxShadow(blurRadius: 1,color: Colors.black26),
-                                ],
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 1, color: Colors.black26),
+                                  ],
                                 ),
-
                                 padding: EdgeInsets.only(
                                     top: 11, bottom: 10, left: 12, right: 10),
                                 child: Column(
@@ -209,9 +212,13 @@ class _ChatPageState extends State<ChatPage> {
                                 minLines: 1,
                                 controller: messageController,
                                 style: TextStyle(fontSize: 19),
-                                
                                 decoration: InputDecoration(
-                                  suffixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.photo_camera, ),),
+                                  suffixIcon: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.photo_camera,
+                                    ),
+                                  ),
                                   contentPadding: EdgeInsets.only(
                                       top: 10, bottom: 10, left: 20, right: 10),
                                   hintText: "Type Message...",
@@ -232,7 +239,8 @@ class _ChatPageState extends State<ChatPage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 8,bottom: 8,right: 8),
+                            padding: const EdgeInsets.only(
+                                top: 8, bottom: 8, right: 8),
                             child: CircleAvatar(
                               radius: 25,
                               backgroundColor: blueColor7,
@@ -248,13 +256,12 @@ class _ChatPageState extends State<ChatPage> {
                                     setState(() {
                                       String nowDateTime = dateTimeFinder();
                                       String sender = "sender";
-                          
+
                                       messageList.add(ChatMessage(
                                           messageContent: message,
                                           messageType: sender,
                                           dateTime: nowDateTime));
                                     });
-                                   
                                   }
                                 },
                               ),

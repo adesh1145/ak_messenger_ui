@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/elevatedbutton.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
-import 'package:ak_messenger/ui/widget/textformfield.dart';
+import '../../widget/colors.dart';
+import '../../widget/elevatedbutton.dart';
+import '../../widget/text.dart';
+import '../../widget/textformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,7 +23,8 @@ class _UpdateProfilePageUi extends State<UpdateProfilePageUi> {
 
   final nameController = TextEditingController(text: "Adesh Yadav");
 
-  final descriptionController = TextEditingController(text: "Every things is possible with money.");
+  final descriptionController =
+      TextEditingController(text: "Every things is possible with money.");
 
   String name = "";
 
@@ -89,28 +90,29 @@ class _UpdateProfilePageUi extends State<UpdateProfilePageUi> {
                             bottom: 0,
                             right: 0,
                             child: Container(
-                                height: 60,
-                                width: 60,
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: gradientColor2,
-                                ),
-                               child: IconButton(onPressed: (){
-                                 imageSelector();
-                               },
-                                icon: Icon( Icons.photo_camera, ),
-                                color: Colors.white,
-                                iconSize: 30,),
+                              height: 60,
+                              width: 60,
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: gradientColor2,
                               ),
-                              
+                              child: IconButton(
+                                onPressed: () {
+                                  imageSelector();
+                                },
+                                icon: Icon(
+                                  Icons.photo_camera,
+                                ),
+                                color: Colors.white,
+                                iconSize: 30,
+                              ),
+                            ),
                           )
                         ]),
                       ),
                       IconButton(
-                        onPressed: () {
-                         
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.more_vert_outlined,
                           color: Colors.white,

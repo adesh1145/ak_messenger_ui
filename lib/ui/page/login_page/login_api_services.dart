@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
-import 'package:ak_messenger/ui/page/chat/chat_list.dart';
-import 'package:ak_messenger/ui/page/otp/otp.dart';
+import '../../page/chat/chat_list.dart';
+import '../../page/otp/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,21 +26,24 @@ Future<void> fetchUser(email, password) async {
   var jsonDataDecoded = jsonDecode(body);
   if (response.statusCode == 200) {
     responseData = jsonDataDecoded;
-  } else if(response.statusCode == 404){
+  } else if (response.statusCode == 404) {
     responseData = jsonDataDecoded;
   }
 }
 
-Future<void> action(context,email, password) async{
-    
+Future<void> action(context, email, password) async {
+  await fetchUser(email, password);
 
-   await fetchUser(email, password);
-   
-
-  if (responseData['link']=='otp/') {
-    Navigator.push(context, MaterialPageRoute(builder:(context) => OtpPageUi(email: email, password: password)));
-  }
-  else if(responseData['access']!=null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => ChatListPageUi(),));
+  if (responseData['link'] == 'otp/') {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OtpPageUi(email: email, password: password)));
+  } else if (responseData['access'] != null) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatListPageUi(),
+        ));
   }
 }

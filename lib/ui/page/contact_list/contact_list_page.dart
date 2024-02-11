@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:ak_messenger/ui/page/chat/chat_page.dart';
-import 'package:ak_messenger/ui/widget/colors.dart';
-import 'package:ak_messenger/ui/widget/text.dart';
+import '../../page/chat/chat_page.dart';
+import '../../widget/colors.dart';
+import '../../widget/text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:permission_handler/permission_handler.dart';
-import 'package:contacts_service/contacts_service.dart';
+// import 'package:contacts_service/contacts_service.dart';
 
 class ContactListPageUi extends StatefulWidget {
   const ContactListPageUi({super.key});
@@ -25,7 +25,7 @@ class _ContacListPageUiState extends State<ContactListPageUi> {
   final messageController = TextEditingController();
   final _listViewController = ScrollController();
   String? message;
-  List<Contact> allContacts = [];
+  // List<Contact> allContacts = [];
   bool isLoading = true;
   String warningMessage = "";
   void getContactPermission() async {
@@ -37,27 +37,25 @@ class _ContacListPageUiState extends State<ContactListPageUi> {
         fetchContacts();
       } else {
         warningMessage = "Please Give Contact Permission.\n Go Settings";
-        setState(() {
-          
-        });
+        setState(() {});
       }
     }
   }
 
   void fetchContacts() async {
-    allContacts = await ContactsService.getContacts();
+    // allContacts = await ContactsService.getContacts();
     isLoading = false;
     setState(() {});
   }
-  String checkNumberisExistInContact(index){
-    
-    try{
-      return allContacts[index].phones![0].value!;
-    }
-    catch (e) {
-      return "";
-    }
-  }
+
+  // String checkNumberisExistInContact(index) {
+  //   try {
+  //     return allContacts[index].phones![0].value!;
+  //   } catch (e) {
+  //     return "";
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +106,11 @@ class _ContacListPageUiState extends State<ContactListPageUi> {
                               EdgeInsets.all(0))),
                       onPressed: () {
                         setState(() {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => ContactListPageUi(),));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContactListPageUi(),
+                              ));
                         });
                       },
                       child: CircleAvatar(
@@ -196,18 +198,20 @@ class _ContacListPageUiState extends State<ContactListPageUi> {
                                       ),
                                     ),
                                     title: TextWidget(
-                                      text: "${allContacts[index].displayName}",
+                                      text: "",
+                                      //  "${allContacts[index].displayName}",
                                       fontweight: FontWeight.w500,
                                     ),
-                                    subtitle: TextWidget(
-                                        text:
-                                            checkNumberisExistInContact(index)),
+                                    subtitle: TextWidget(text: ""
+                                        // checkNumberisExistInContact(index)
+                                        ),
                                   ),
                                 ),
                               ),
                             );
                           },
-                          itemCount: allContacts.length,
+                          itemCount: 0,
+                          // allContacts.length,
                         ),
                 ),
               ),
